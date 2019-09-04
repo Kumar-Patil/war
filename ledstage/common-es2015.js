@@ -16,7 +16,7 @@ __webpack_require__.r(__webpack_exports__);
 
 let ApiService = class ApiService {
     constructor() {
-        this.API_BASE_URL = 'http://ec2-52-15-97-155.us-east-2.compute.amazonaws.com:8080/';
+        this.API_BASE_URL = 'http://ec2-52-15-97-155.us-east-2.compute.amazonaws.com:8080/led/';
         // District API
         this.API_DISTRICT_API = 'district';
         this.API_AREA_API = 'area';
@@ -70,8 +70,8 @@ let HttpService = class HttpService {
     }
     getAll(apiName) {
         const requestUrl = this.apiService.API_BASE_URL + apiName;
-        // return this.httpClient.get(requestUrl);
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(_dashboard_district_mock_district__WEBPACK_IMPORTED_MODULE_5__["Districts"]);
+        return this.httpClient.get(requestUrl);
+        // return of(Districts);
     }
     getAllArea(apiName) {
         const requestUrl = this.apiService.API_BASE_URL + apiName;
