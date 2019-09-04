@@ -16,7 +16,7 @@ __webpack_require__.r(__webpack_exports__);
 
 let ApiService = class ApiService {
     constructor() {
-        this.API_BASE_URL = 'http://ec2-52-15-97-155.us-east-2.compute.amazonaws.com:8080/led/';
+        this.API_BASE_URL = 'http://ec2-52-15-97-155.us-east-2.compute.amazonaws.com:8080/led/api/v1/';
         // District API
         this.API_DISTRICT_API = 'district';
         this.API_AREA_API = 'area';
