@@ -35,7 +35,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div>\r\n  <div>\r\n    <h3>Reviewed Display Report</h3>\r\n  </div>\r\n\r\n  <p-table [columns]=\"cols\" [value]=\"users\" sortMode=\"multiple\" [paginator]=\"true\" [rows]=\"8\" #dt>\r\n    <ng-template pTemplate=\"caption\">\r\n      Users List\r\n    </ng-template>\r\n    <ng-template pTemplate=\"header\" let-columns>\r\n      <tr>\r\n        <th *ngFor=\"let col of columns\" [pSortableColumn]=\"col.field\">\r\n          {{col.header}}\r\n          <p-sortIcon [field]=\"col.field\"></p-sortIcon>\r\n        </th>\r\n      </tr>\r\n      <tr>\r\n        <th *ngFor=\"let col of columns\" [ngSwitch]=\"col.field\">\r\n          <input *ngSwitchDefault pInputText type=\"text\"\r\n            (input)=\"dt.filter($event.target.value, col.field, col.filterMatchMode)\">\r\n          <span *ngSwitchCase=\"'review'\"></span>\r\n        </th>\r\n      </tr>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"body\" let-user let-columns=\"columns\">\r\n      <tr>\r\n        <td *ngFor=\"let col of columns\" [ngSwitch]=\"col.field\">\r\n          <span *ngSwitchDefault> {{user[col.field]}} </span>\r\n          <span *ngSwitchCase=\"'review'\">\r\n            <span *ngIf=\"user[col.field] == 'approved'\" class=\"badge badge-success badge-padding\">Approved</span>\r\n            <span *ngIf=\"user[col.field] == 'not_approved'\" class=\"badge badge-warning badge-padding\">Not\r\n              Approved</span>\r\n          </span>\r\n        </td>\r\n      </tr>\r\n    </ng-template>\r\n  </p-table>\r\n</div>\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<div>\r\n  <div>\r\n    <h3>Reviewed Display Report</h3>\r\n  </div>\r\n\r\n  <p-table [columns]=\"cols\" [value]=\"users\" sortMode=\"multiple\" [paginator]=\"true\" [rows]=\"8\" #dt>\r\n    <ng-template pTemplate=\"caption\">\r\n      Users List\r\n    </ng-template>\r\n    <ng-template pTemplate=\"header\" let-columns>\r\n      <tr>\r\n        <th *ngFor=\"let col of columns\" [pSortableColumn]=\"col.field\">\r\n          {{col.header}}\r\n          <p-sortIcon [field]=\"col.field\"></p-sortIcon>\r\n        </th>\r\n      </tr>\r\n      <tr>\r\n        <th *ngFor=\"let col of columns\" [ngSwitch]=\"col.field\">\r\n          <input *ngSwitchDefault pInputText type=\"text\"\r\n            (input)=\"dt.filter($event.target.value, col.field, col.filterMatchMode)\">\r\n          <span *ngSwitchCase=\"'review'\"></span>\r\n        </th>\r\n      </tr>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"body\" let-user let-columns=\"columns\">\r\n      <tr>\r\n        <td *ngFor=\"let col of columns\" [ngSwitch]=\"col.field\">\r\n          <span *ngSwitchDefault> {{user[col.field]}} </span>\r\n          <span *ngSwitchCase=\"'status'\">\r\n            <span *ngIf=\"user[col.field].toLowerCase() === 'approved'\" class=\"badge badge-success badge-padding\">Approved</span>\r\n            <span *ngIf=\"user[col.field].toLowerCase() !== 'approved'\" class=\"badge badge-warning badge-padding\">Not\r\n              Approved</span>\r\n          </span>\r\n        </td>\r\n      </tr>\r\n    </ng-template>\r\n  </p-table>\r\n</div>\r\n");
 
 /***/ }),
 
@@ -438,34 +438,40 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-/* harmony import */ var _mock_unreviewed__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./mock.unreviewed */ "./src/app/dashboard/led-vehicle/mock.unreviewed.ts");
-/* harmony import */ var _mock_reviewed__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./mock.reviewed */ "./src/app/dashboard/led-vehicle/mock.reviewed.ts");
-
-
+/* harmony import */ var src_app_common_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/common/api.service */ "./src/app/common/api.service.ts");
 
 
 
 
 let LedVehicleService = class LedVehicleService {
-    constructor(http) {
-        this.http = http;
+    constructor(httpClient, apiService) {
+        this.httpClient = httpClient;
+        this.apiService = apiService;
     }
     createReport(report) {
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])({});
+        const requestUrl = this.apiService.API_BASE_URL + this.apiService.API_LED_DISPLAY;
+        return this.httpClient.post(requestUrl, report);
+        // return of({});
     }
     getUnreviewedDisplays() {
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(_mock_unreviewed__WEBPACK_IMPORTED_MODULE_4__["Unreviewed"]);
+        const requestUrl = this.apiService.API_BASE_URL + this.apiService.API_LED_DISPLAY_UN_REVIEWED;
+        return this.httpClient.get(requestUrl);
+        // return of(Unreviewed);
     }
     getReviewedDisplays() {
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(_mock_reviewed__WEBPACK_IMPORTED_MODULE_5__["Reviewed"]);
+        const requestUrl = this.apiService.API_BASE_URL + this.apiService.API_LED_DISPLAY_REVIEWED;
+        return this.httpClient.get(requestUrl);
+        // return of(Reviewed);
     }
     deleteUser(user) {
-        return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])();
+        const requestUrl = this.apiService.API_BASE_URL + this.apiService.API_LED_DISPLAY + '/' + user.id;
+        return this.httpClient.delete(requestUrl);
+        // return of();
     }
 };
 LedVehicleService.ctorParameters = () => [
-    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
+    { type: src_app_common_api_service__WEBPACK_IMPORTED_MODULE_3__["ApiService"] }
 ];
 LedVehicleService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
@@ -473,593 +479,6 @@ LedVehicleService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     })
 ], LedVehicleService);
 
-
-
-/***/ }),
-
-/***/ "./src/app/dashboard/led-vehicle/mock.reviewed.ts":
-/*!********************************************************!*\
-  !*** ./src/app/dashboard/led-vehicle/mock.reviewed.ts ***!
-  \********************************************************/
-/*! exports provided: Reviewed */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Reviewed", function() { return Reviewed; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-
-const Reviewed = [
-    {
-        reportDate: '01 Aug 19',
-        area: 'Chatra',
-        vehicle: 'HR67B0486',
-        displayTime: '9:45 AM To 12:30 PM - 2 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '02 Aug 19',
-        area: 'Ramgarh',
-        vehicle: 'JH01DL4005',
-        displayTime: '9:00 AM To 1:30 PM - 4 Hrs 30 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Saraikela',
-        vehicle: 'HR67B1643',
-        displayTime: '8:00 AM To 12:30 PM - 4 Hrs 30 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '03 Aug 19',
-        area: 'Chatra',
-        vehicle: 'HR67B9402',
-        displayTime: '8:00 AM To 12:30 PM - 4 Hrs 30 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Dumka',
-        vehicle: 'HR67B0486',
-        displayTime: '9:45 AM To 4:40 PM - 7 Hrs 00 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '10 Aug 19',
-        area: 'Simdega',
-        vehicle: 'JH01CT1600',
-        displayTime: '8:00 AM To 12:30 PM - 4 Hrs 30 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '13 Aug 19',
-        area: 'Pakur',
-        vehicle: 'HR67B9184',
-        displayTime: '10:00 AM To 12:30 PM - 2 Hrs 30 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Chatra',
-        vehicle: 'JH01CT0168',
-        displayTime: '8:45 AM To 06:45 PM - 10 Hrs 00 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '13 Aug 19',
-        area: 'Lohardaga',
-        vehicle: 'JH01CT1911',
-        displayTime: '9:45 AM To 12:45 PM - 3 Hrs 00 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '15 Aug 19',
-        area: 'Latehar',
-        vehicle: 'HR67A9086',
-        displayTime: '9:00 AM To 06:00 PM - 9 Hrs 00 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '18 Aug 19',
-        area: 'Pakur',
-        vehicle: 'HR67B9184',
-        displayTime: '6:45 AM To 12:45 PM - 6 Hrs 00 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Sep 19',
-        area: 'Hazaribagh ',
-        vehicle: 'HR67B9402',
-        displayTime: '7:00 AM To 1:30 PM - 6 Hrs 00 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '10 Aug 19',
-        area: 'Saraikela',
-        vehicle: 'HR67B0486',
-        displayTime: '9:45 AM To 12:45 PM - 3 Hrs 00 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '15 Aug 19',
-        area: 'Giridih',
-        vehicle: 'HR67B8547',
-        displayTime: '12:45 PM To 7:30 PM - 6 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '02 Sep 19',
-        area: 'Godda',
-        vehicle: 'HR60A3456',
-        displayTime: '9:45 AM To 8:45 PM - 11 Hrs 00 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Deoghar',
-        vehicle: 'JH01DD7701',
-        displayTime: '9:45 AM To 12:30 PM - 2 Hrs 45 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Daltonganj',
-        vehicle: 'JH01DD1215',
-        displayTime: '9:00 AM To 7:30 PM - 10 Hrs 30 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Saraikela',
-        vehicle: 'HR67B0486',
-        displayTime: '9:45 AM To 3:30 PM - 6 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Chaibasa',
-        vehicle: 'JH01DD7701',
-        displayTime: '9:45 AM To 12:30 PM - 9 Hrs 0 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Daltonganj',
-        vehicle: 'HR67B9402',
-        displayTime: '6:45 AM To 4:30 PM - 10 Hrs 45 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Chatra',
-        vehicle: 'JH01DD3487',
-        displayTime: '9:45 AM To 7:30 PM - 8 Hrs 30 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Saraikela',
-        vehicle: 'JH01CT0168',
-        displayTime: '9:30 AM To 10:30 PM - 13 Hrs 00 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Chaibasa',
-        vehicle: 'JH01DD3487',
-        displayTime: '9:45 AM To 4:30 PM - 7 Hrs 45 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Dhanbad Gramin	',
-        vehicle: 'HR67B0486',
-        displayTime: '9:45 AM To 12:30 PM - 10 Hrs 45 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Chaibasa',
-        vehicle: 'JH01DA2075',
-        displayTime: '9:45 AM To 10:30 PM - 12 Hrs 45 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Chaibasa',
-        vehicle: 'JH01DD3487',
-        displayTime: '8:45 AM To 7:30 PM - 10 Hrs 45 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Dhanbad Gramin	',
-        vehicle: 'JH01CT0168',
-        displayTime: '9:45 AM To 6:30 PM - 8 Hrs 35 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Dhanbad Gramin	',
-        vehicle: 'JH01DA2075',
-        displayTime: '9:45 AM To 7:30 PM - 10 Hrs 45 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Chatra',
-        vehicle: 'HR67B0486',
-        displayTime: '9:45 AM To 9:45 PM - 6 Hrs 45 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Latehar',
-        vehicle: 'JH01DD3487',
-        displayTime: '9:45 AM To 3:30 PM - 5 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Dhanbad Gramin	',
-        vehicle: 'JH01DD1215',
-        displayTime: '9:45 AM To 10:30 PM - 10 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Latehar',
-        vehicle: 'HR67B0486',
-        displayTime: '9:45 AM To 5:30 PM - 7 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Latehar',
-        vehicle: 'JH01DD3487',
-        displayTime: '9:45 AM To 12:30 PM - 2 Hrs 45 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Saraikela',
-        vehicle: 'JH01CT0168',
-        displayTime: '9:45 AM To 12:30 PM - 7 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Dhanbad Gramin	',
-        vehicle: 'HR67B0486',
-        displayTime: '9:45 AM To 12:30 PM - 10 Hrs 45 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Chatra',
-        vehicle: 'JH01DD1215',
-        displayTime: '9:45 AM To 12:30 PM - 6 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Chatra',
-        vehicle: 'JH01DA2075',
-        displayTime: '9:45 AM To 9:30 PM - 12 Hrs 15 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Latehar',
-        vehicle: 'JH01CT0168',
-        displayTime: '9:45 AM To 12:30 PM - 5 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Latehar',
-        vehicle: 'JH01DD7701',
-        displayTime: '9:45 AM To 12:30 PM - 7 Hrs 45 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Daltonganj',
-        vehicle: 'JH01DD3487',
-        displayTime: '9:45 AM To 12:30 PM - 10 Hrs 15 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Chaibasa',
-        vehicle: 'JH01DA2075',
-        displayTime: '9:45 AM To 11:30 AM - 01 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Latehar',
-        vehicle: 'HR67B0486',
-        displayTime: '9:45 AM To 12:30 PM - 9 Hrs 45 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Chatra',
-        vehicle: 'JH01DD7701',
-        displayTime: '9:45 AM To 12:30 PM - 10 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Dhanbad Gramin	',
-        vehicle: 'JH01DA2075',
-        displayTime: '9:45 AM To 12:30 PM - 12 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Daltonganj',
-        vehicle: 'JH01DD3487',
-        displayTime: '9:45 AM To 12:30 PM - 2 Hrs 45 Min',
-        review: 'approved'
-    }
-];
-
-
-/***/ }),
-
-/***/ "./src/app/dashboard/led-vehicle/mock.unreviewed.ts":
-/*!**********************************************************!*\
-  !*** ./src/app/dashboard/led-vehicle/mock.unreviewed.ts ***!
-  \**********************************************************/
-/*! exports provided: Unreviewed */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Unreviewed", function() { return Unreviewed; });
-/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-
-const Unreviewed = [
-    {
-        reportDate: '01 Aug 19',
-        area: 'Chatra',
-        vehicle: 'HR67B0486',
-        displayTime: '9:45 AM To 12:30 PM - 2 Hrs 45 Min'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Dhanbad Gramin	',
-        vehicle: 'JH01DA2075',
-        displayTime: '9:45 AM To 7:30 PM - 10 Hrs 45 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Chatra',
-        vehicle: 'HR67B0486',
-        displayTime: '9:45 AM To 9:45 PM - 6 Hrs 45 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Latehar',
-        vehicle: 'JH01DD3487',
-        displayTime: '9:45 AM To 3:30 PM - 5 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Dhanbad Gramin	',
-        vehicle: 'JH01DD1215',
-        displayTime: '9:45 AM To 10:30 PM - 10 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Latehar',
-        vehicle: 'HR67B0486',
-        displayTime: '9:45 AM To 5:30 PM - 7 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Latehar',
-        vehicle: 'JH01DD3487',
-        displayTime: '9:45 AM To 12:30 PM - 2 Hrs 45 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Saraikela',
-        vehicle: 'JH01CT0168',
-        displayTime: '9:45 AM To 12:30 PM - 7 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Dhanbad Gramin	',
-        vehicle: 'HR67B0486',
-        displayTime: '9:45 AM To 12:30 PM - 10 Hrs 45 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Chatra',
-        vehicle: 'JH01DD1215',
-        displayTime: '9:45 AM To 12:30 PM - 6 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Chatra',
-        vehicle: 'JH01DA2075',
-        displayTime: '9:45 AM To 9:30 PM - 12 Hrs 15 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Latehar',
-        vehicle: 'JH01CT0168',
-        displayTime: '9:45 AM To 12:30 PM - 5 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Latehar',
-        vehicle: 'JH01DD7701',
-        displayTime: '9:45 AM To 12:30 PM - 7 Hrs 45 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Daltonganj',
-        vehicle: 'JH01DD3487',
-        displayTime: '9:45 AM To 12:30 PM - 10 Hrs 15 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Saraikela',
-        vehicle: 'HR67B1643',
-        displayTime: '8:00 AM To 12:30 PM - 4 Hrs 30 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '03 Aug 19',
-        area: 'Chatra',
-        vehicle: 'HR67B9402',
-        displayTime: '8:00 AM To 12:30 PM - 4 Hrs 30 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Dumka',
-        vehicle: 'HR67B0486',
-        displayTime: '9:45 AM To 4:40 PM - 7 Hrs 00 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '10 Aug 19',
-        area: 'Simdega',
-        vehicle: 'JH01CT1600',
-        displayTime: '8:00 AM To 12:30 PM - 4 Hrs 30 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '13 Aug 19',
-        area: 'Pakur',
-        vehicle: 'HR67B9184',
-        displayTime: '10:00 AM To 12:30 PM - 2 Hrs 30 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Chatra',
-        vehicle: 'JH01CT0168',
-        displayTime: '8:45 AM To 06:45 PM - 10 Hrs 00 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '13 Aug 19',
-        area: 'Lohardaga',
-        vehicle: 'JH01CT1911',
-        displayTime: '9:45 AM To 12:45 PM - 3 Hrs 00 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '15 Aug 19',
-        area: 'Latehar',
-        vehicle: 'HR67A9086',
-        displayTime: '9:00 AM To 06:00 PM - 9 Hrs 00 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '18 Aug 19',
-        area: 'Pakur',
-        vehicle: 'HR67B9184',
-        displayTime: '6:45 AM To 12:45 PM - 6 Hrs 00 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Sep 19',
-        area: 'Hazaribagh ',
-        vehicle: 'HR67B9402',
-        displayTime: '7:00 AM To 1:30 PM - 6 Hrs 00 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '10 Aug 19',
-        area: 'Saraikela',
-        vehicle: 'HR67B0486',
-        displayTime: '9:45 AM To 12:45 PM - 3 Hrs 00 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '15 Aug 19',
-        area: 'Giridih',
-        vehicle: 'HR67B8547',
-        displayTime: '12:45 PM To 7:30 PM - 6 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '02 Sep 19',
-        area: 'Godda',
-        vehicle: 'HR60A3456',
-        displayTime: '9:45 AM To 8:45 PM - 11 Hrs 00 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Deoghar',
-        vehicle: 'JH01DD7701',
-        displayTime: '9:45 AM To 12:30 PM - 2 Hrs 45 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Daltonganj',
-        vehicle: 'JH01DD1215',
-        displayTime: '9:00 AM To 7:30 PM - 10 Hrs 30 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Saraikela',
-        vehicle: 'HR67B0486',
-        displayTime: '9:45 AM To 3:30 PM - 6 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Chaibasa',
-        vehicle: 'JH01DD7701',
-        displayTime: '9:45 AM To 12:30 PM - 9 Hrs 0 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Chaibasa',
-        vehicle: 'JH01DA2075',
-        displayTime: '9:45 AM To 11:30 AM - 01 Hrs 45 Min',
-        review: 'approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Latehar',
-        vehicle: 'HR67B0486',
-        displayTime: '9:45 AM To 12:30 PM - 9 Hrs 45 Min',
-        review: 'not_approved'
-    },
-    {
-        reportDate: '01 Aug 19',
-        area: 'Chatra',
-        vehicle: 'HR67B0486',
-        displayTime: '9:45 AM To 12:30 PM - 2 Hrs 45 Min'
-    }
-];
 
 
 /***/ }),
@@ -1103,10 +522,10 @@ let ReviewedDisplayComponent = class ReviewedDisplayComponent {
         });
         this.cols = [
             { field: 'reportDate', header: 'Date' },
-            { field: 'area', header: 'Area' },
-            { field: 'vehicle', header: 'Vehicle No' },
-            { field: 'displayTime', header: 'Display Time' },
-            { field: 'review', header: 'Reviews' },
+            { field: 'vechicleStayArea', header: 'Area' },
+            { field: 'vechicleNo', header: 'Vehicle No' },
+            { field: 'reportingTime', header: 'Display Time' },
+            { field: 'status', header: 'Reviews' },
         ];
     }
 };
@@ -1159,16 +578,16 @@ let UnreviewedDisplayComponent = class UnreviewedDisplayComponent {
         this.ledVehicleService = ledVehicleService;
     }
     ngOnInit() {
+        this.cols = [
+            { field: 'reportDate', header: 'Date' },
+            { field: 'districtAreaName', header: 'Area' },
+            { field: 'vechicleNo', header: 'Vehicle No' },
+            { field: 'reportingTime', header: 'Display Time' },
+            { field: 'delete', header: '' },
+        ];
         this.ledVehicleService.getUnreviewedDisplays().subscribe(res => {
             this.users = res;
         });
-        this.cols = [
-            { field: 'reportDate', header: 'Date' },
-            { field: 'area', header: 'Area' },
-            { field: 'vehicle', header: 'Vehicle No' },
-            { field: 'displayTime', header: 'Display Time' },
-            { field: 'delete', header: '' },
-        ];
     }
     /**
      * delete
@@ -1187,7 +606,6 @@ UnreviewedDisplayComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-unreviewed-display',
         template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./unreviewed-display.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/dashboard/led-vehicle/unreviewed-display/unreviewed-display.component.html")).default,
-        changeDetection: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectionStrategy"].OnPush,
         styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./unreviewed-display.component.css */ "./src/app/dashboard/led-vehicle/unreviewed-display/unreviewed-display.component.css")).default]
     })
 ], UnreviewedDisplayComponent);

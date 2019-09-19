@@ -22,7 +22,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div id=\"create-district\">\r\n  <div class=\"row\">\r\n    <div class=\"col-12 col-md-12 col-lg-12\" >\r\n      <div>\r\n        <h4>\r\n          AREA DETAILS\r\n        </h4>\r\n      </div>\r\n      <div>\r\n        <div class=\"row\">\r\n          <div class=\"col-sm-12\" style=\"padding-right: 0px;padding-left: 0px;\">\r\n            <form class=\"row detail\" name=\"form\" #report=\"ngForm\">\r\n              <div class=\"col-md-3 col-sm-4 col-xs-6\">\r\n                <div class=\"form-group is-required-short\">\r\n                  <label class=\"control-label\">Area Name*</label>\r\n                  <input type=\"text\" id=\"area-id\" class=\"form-control\" placeholder=\"Enter Area Name\" name=\"areaName\"\r\n                  [(ngModel)]=\"areaName\" required=\"true\">\r\n                </div>\r\n              </div>\r\n              <div class=\"col-md-3 col-sm-4 col-xs-6\">\r\n                <div class=\"form-group is-required-short\">\r\n                  <label class=\"control-label\">District Name *</label>\r\n                    <ngx-select-dropdown (change)=\"selectionChanged($event)\" [config]=\"config\" [options]=\"options\" [(ngModel)]=\"districtName\" name=\"districtName\"></ngx-select-dropdown>\r\n                  \r\n                </div>\r\n              </div>\r\n            </form>\r\n            <div class=\"row\" style=\"margin-left: 15px; \">\r\n                    <div style=\"float: left;\">\r\n                            <div>\r\n                                <div class=\"p-20\">\r\n                                    <button type=\"submit\" style=\"background-color: #FF9934\" name=\"btcreatereport\" (click)=\"create()\" value=\"Foo\" id=\"btcreatereport\" class=\"ladda-button btn btn-primary waves-effect waves-light\" data-style=\"zoom-out\">\r\n                                <span aria-hidden=\"true\"></span><span class=\"ladda-label\">Create Area</span><span class=\"btn-label btn-label-right\"><i class=\"fa fa-arrow-right\"></i>\r\n                                   </span><span class=\"ladda-spinner\"></span></button>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<ngx-spinner></ngx-spinner>\r\n<div id=\"create-district\">\r\n  <div class=\"row\">\r\n    <div class=\"col-12 col-md-12 col-lg-12\" >\r\n      <div>\r\n        <h4>\r\n          AREA DETAILS\r\n        </h4>\r\n      </div>\r\n      <div>\r\n        <div class=\"row\">\r\n          <div class=\"col-sm-12\" style=\"padding-right: 0px;padding-left: 0px;\">\r\n            <form class=\"row detail\" name=\"form\" #report=\"ngForm\">\r\n              <div class=\"col-md-3 col-sm-4 col-xs-6\">\r\n                <div class=\"form-group is-required-short\">\r\n                  <label class=\"control-label\">Area Name*</label>\r\n                  <input type=\"text\" id=\"area-id\" class=\"form-control\" placeholder=\"Enter Area Name\" name=\"areaName\"\r\n                  [(ngModel)]=\"areaName\" required=\"true\">\r\n                </div>\r\n              </div>\r\n              <div class=\"col-md-3 col-sm-4 col-xs-6\">\r\n                <div class=\"form-group is-required-short\">\r\n                  <label class=\"control-label\">District Name *</label>\r\n                    <ngx-select-dropdown (change)=\"selectionChanged($event)\" [config]=\"config\" [options]=\"options\" [(ngModel)]=\"areaDetails\" name=\"areaDetails\"></ngx-select-dropdown>\r\n                  \r\n                </div>\r\n              </div>\r\n            </form>\r\n            <div class=\"row\" style=\"margin-left: 15px; \">\r\n                    <div style=\"float: left;\">\r\n                            <div>\r\n                                <div class=\"p-20\">\r\n                                    <button type=\"submit\" style=\"background-color: #FF9934\" name=\"btcreatereport\" (click)=\"create()\" value=\"Foo\" id=\"btcreatereport\" class=\"ladda-button btn btn-primary waves-effect waves-light\" data-style=\"zoom-out\">\r\n                                <span aria-hidden=\"true\"></span><span class=\"ladda-label\">{{createUpdate}}</span><span class=\"btn-label btn-label-right\"><i class=\"fa fa-arrow-right\"></i>\r\n                                   </span><span class=\"ladda-spinner\"></span></button>\r\n                                </div>\r\n                            </div>\r\n                        </div>\r\n                </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n");
 
 /***/ }),
 
@@ -35,7 +35,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<div><h2>View Areas</h2>\r\n<p-table [columns]=\"cols\" [value]=\"districts\" sortMode=\"multiple\" [paginator]=\"true\" [rows]=\"10\" #dt>\r\n    <ng-template pTemplate=\"caption\">\r\n        <div style=\"text-align: right\">        \r\n            <i class=\"fa fa-search\" style=\"margin:4px 4px 0 0\"></i>\r\n            <input type=\"text\" pInputText size=\"50\" placeholder=\"Global Filter\" (input)=\"dt.filterGlobal($event.target.value, 'contains')\" style=\"width:auto\">\r\n        </div>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"header\" let-columns>\r\n      <tr>\r\n        <th *ngFor=\"let col of columns\" [pSortableColumn]=\"col.field\">\r\n          {{col.header}}\r\n          <p-sortIcon [field]=\"col.field\"></p-sortIcon>\r\n        </th>\r\n      </tr>\r\n      <tr>\r\n        <th *ngFor=\"let col of columns\" [ngSwitch]=\"col.field\">\r\n          <input *ngSwitchDefault pInputText type=\"text\" (input)=\"dt.filter($event.target.value, col.field, col.filterMatchMode)\">\r\n          <span *ngSwitchCase=\"'delete'\"></span>        </th>\r\n      </tr>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"body\" let-user let-columns=\"columns\">\r\n      <tr> \r\n      <td *ngFor=\"let col of columns\" [ngSwitch]=\"col.field\">\r\n        <span *ngSwitchDefault> {{user[col.field]}} </span>\r\n        <button *ngSwitchCase=\"'delete'\" type=\"button\" class=\"btn btn-danger btn-sm\" (click)=\"delete(user)\">Delete</button> \r\n      </td>\r\n    </tr>\r\n    </ng-template>\r\n  </p-table>\r\n</div>");
+/* harmony default export */ __webpack_exports__["default"] = ("<ngx-spinner></ngx-spinner>\r\n<div><h2>View Areas</h2>\r\n<p-table [columns]=\"cols\" [value]=\"areas\" sortMode=\"multiple\" [paginator]=\"true\" [rows]=\"10\" #dt>\r\n    <ng-template pTemplate=\"caption\">\r\n        <div style=\"text-align: right\">        \r\n            <i class=\"fa fa-search\" style=\"margin:4px 4px 0 0\"></i>\r\n            <input type=\"text\" pInputText size=\"50\" placeholder=\"Global Filter\" (input)=\"dt.filterGlobal($event.target.value, 'contains')\" style=\"width:auto\">\r\n        </div>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"header\" let-columns>\r\n      <tr>\r\n        <th *ngFor=\"let col of columns\" [pSortableColumn]=\"col.field\">\r\n          {{col.header}}\r\n          <p-sortIcon [field]=\"col.field\"></p-sortIcon>\r\n        </th>\r\n      </tr>\r\n      <tr>\r\n        <th *ngFor=\"let col of columns\" [ngSwitch]=\"col.field\">\r\n          <input *ngSwitchDefault pInputText type=\"text\" (input)=\"dt.filter($event.target.value, col.field, col.filterMatchMode)\">\r\n          <span *ngSwitchCase=\"'delete'\"></span>        </th>\r\n      </tr>\r\n    </ng-template>\r\n    <ng-template pTemplate=\"body\" let-user let-columns=\"columns\">\r\n      <tr> \r\n      <td *ngFor=\"let col of columns\" [ngSwitch]=\"col.field\">\r\n        <span *ngSwitchDefault> <a routerLink=\"area/{{user.id}}\">{{user[col.field]}}</a></span>\r\n        <button *ngSwitchCase=\"'delete'\" type=\"button\" class=\"btn btn-danger btn-sm\" (click)=\"delete(user)\">Delete</button> \r\n      </td>\r\n    </tr>\r\n    </ng-template>\r\n  </p-table>\r\n</div>");
 
 /***/ }),
 
@@ -72,6 +72,10 @@ const routes = [
             {
                 path: 'viewarea',
                 component: _view_area_view_area_component__WEBPACK_IMPORTED_MODULE_5__["ViewAreaComponent"]
+            },
+            {
+                path: 'viewarea/area/:id',
+                component: _create_area_create_area_component__WEBPACK_IMPORTED_MODULE_4__["CreateAreaComponent"]
             },
             {
                 path: '', redirectTo: 'createDisplay', pathMatch: 'full'
@@ -161,7 +165,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var primeng_table__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(primeng_table__WEBPACK_IMPORTED_MODULE_11__);
 /* harmony import */ var primeng_paginator__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! primeng/paginator */ "./node_modules/primeng/paginator.js");
 /* harmony import */ var primeng_paginator__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(primeng_paginator__WEBPACK_IMPORTED_MODULE_12__);
-/* harmony import */ var _view_area_view_area_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./view-area/view-area.component */ "./src/app/dashboard/area/view-area/view-area.component.ts");
+/* harmony import */ var ngx_spinner__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ngx-spinner */ "./node_modules/ngx-spinner/fesm2015/ngx-spinner.js");
+/* harmony import */ var _view_area_view_area_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./view-area/view-area.component */ "./src/app/dashboard/area/view-area/view-area.component.ts");
+/* harmony import */ var _confirmation_dialog_confirmation_dialog_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./../../confirmation-dialog/confirmation-dialog.service */ "./src/app/confirmation-dialog/confirmation-dialog.service.ts");
+
+
 
 
 
@@ -180,7 +188,7 @@ let AreaModule = class AreaModule {
 };
 AreaModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-        declarations: [_area_component__WEBPACK_IMPORTED_MODULE_4__["AreaComponent"], _create_area_create_area_component__WEBPACK_IMPORTED_MODULE_5__["CreateAreaComponent"], _view_area_view_area_component__WEBPACK_IMPORTED_MODULE_13__["ViewAreaComponent"]],
+        declarations: [_area_component__WEBPACK_IMPORTED_MODULE_4__["AreaComponent"], _create_area_create_area_component__WEBPACK_IMPORTED_MODULE_5__["CreateAreaComponent"], _view_area_view_area_component__WEBPACK_IMPORTED_MODULE_14__["ViewAreaComponent"]],
         imports: [
             _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
             _area_routing_module__WEBPACK_IMPORTED_MODULE_3__["AreaRoutingModule"],
@@ -191,7 +199,9 @@ AreaModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             _angular_common_http__WEBPACK_IMPORTED_MODULE_10__["HttpClientModule"],
             primeng_table__WEBPACK_IMPORTED_MODULE_11__["TableModule"],
             primeng_paginator__WEBPACK_IMPORTED_MODULE_12__["PaginatorModule"],
-        ]
+            ngx_spinner__WEBPACK_IMPORTED_MODULE_13__["NgxSpinnerModule"]
+        ],
+        providers: [_confirmation_dialog_confirmation_dialog_service__WEBPACK_IMPORTED_MODULE_15__["ConfirmationDialogService"]]
     })
 ], AreaModule);
 
@@ -226,35 +236,36 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _common_http_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../common/http.service */ "./src/app/common/http.service.ts");
 /* harmony import */ var _common_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../common/api.service */ "./src/app/common/api.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var ngx_spinner__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-spinner */ "./node_modules/ngx-spinner/fesm2015/ngx-spinner.js");
+/* harmony import */ var _confirmation_dialog_confirmation_dialog_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../confirmation-dialog/confirmation-dialog.service */ "./src/app/confirmation-dialog/confirmation-dialog.service.ts");
+/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../_alert */ "./src/app/_alert/index.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+
+
+
 
 
 
 
 
 let CreateAreaComponent = class CreateAreaComponent {
-    constructor(httpService, apiService, router) {
+    constructor(httpService, apiService, spinner, confirmationDialogService, alertService, router, activatedRoute) {
         this.httpService = httpService;
         this.apiService = apiService;
+        this.spinner = spinner;
+        this.confirmationDialogService = confirmationDialogService;
+        this.alertService = alertService;
         this.router = router;
-        this.reportingtime = { hour: 13, minute: 30 };
-        this.closingTime = { hour: 18, minute: 30 };
-        this.meridian = true;
-        this.myDpOptions = {
-            dateRange: false,
-            dateFormat: 'dd/mm/yyyy'
-            // other options are here...
-        };
-        this.myDateInit = true;
-        this.model = null;
-        this.options = [{ id: 34, description: 'Ranchi: H2334' }, { id: 35, description: 'Gumla: H4232' }, { id: 37, description: 'Bokaro: F2342' }];
+        this.activatedRoute = activatedRoute;
+        this.isEdit = false;
+        this.createUpdate = 'Create Area';
         this.config = {
-            displayKey: 'description',
+            displayKey: 'districtName',
             search: true,
             height: 'auto',
             placeholder: 'Select',
             customComparator: () => { },
-            limitTo: this.options.length,
+            // limitTo: this.options.length, // a number thats limits the no of options displayed in the UI similar to angular's limitTo pipe
             moreText: 'more',
             noResultsFound: 'No results found!',
             searchPlaceholder: 'Search',
@@ -262,45 +273,89 @@ let CreateAreaComponent = class CreateAreaComponent {
         };
     }
     ngOnInit() {
-        this.options = [...this.options, { id: 38, description: 'Goddha: H1122' }];
-        if (this.myDateInit) {
-            // Initialize to specific date (14.05.2019) with IMyDate object
-            this.model = {
-                isRange: false,
-                singleDate: {
-                    date: {
-                        year: 2019,
-                        month: 5,
-                        day: 14
-                    }
-                }
-            };
-        }
-        else {
-            // Initialize to today with javascript date object
-            this.model = { isRange: false, singleDate: { jsDate: new Date() } };
-        }
+        this.spinner.show();
+        // tslint:disable-next-line:no-unused-expression
+        this.activatedRoute && this.activatedRoute.params.subscribe((params) => {
+            this.areaId = params.id;
+            if (this.areaId) {
+                this.spinner.show();
+                this.isEdit = true;
+                this.createUpdate = 'Update Area';
+                this.getAreaById(this.areaId);
+            }
+        });
+        this.getAllDistricts();
+        console.log(this.options);
     }
-    toggleMeridian() {
-        this.meridian = !this.meridian;
-    }
-    submitReport() {
+    create() {
         const requestObj = {
             areaName: this.areaName,
-            closingTime: this.closingTime,
-            closingPlace: this.closingPlace,
-            reportingtime: this.reportingtime,
-            vehicleNum: this.vehicleNum,
-            vehicleStayArea: this.vehicleStayArea,
-            model: this.model
+            id: 0,
+            districtId: this.areaDetails.id,
+            districtName: this.areaDetails.districtName
         };
-        console.log('form submition');
+        if (this.isEdit) {
+            requestObj.id = this.areaId;
+        }
+        this.httpService.post(this.apiService.API_AREA_API, requestObj).subscribe((data) => {
+            if (data) {
+                this.autoHideMessage();
+                if (this.isEdit) {
+                    this.alertService.success('sucessfully updated area');
+                }
+                else {
+                    this.alertService.success('sucessfully created area');
+                }
+            }
+        }, error => {
+            this.autoHideMessage();
+            this.alertService.error('Error while creating area!');
+            console.log(error);
+        });
+    }
+    getAllDistricts() {
+        this.httpService.getAll(this.apiService.API_DISTRICT_API).subscribe((data) => {
+            if (data) {
+                const result = [];
+                // tslint:disable-next-line:forin
+                for (const val in data) {
+                    result.push(data[val]);
+                }
+                this.options = result;
+                this.spinner.hide();
+            }
+        }, error => {
+            console.log(error);
+        });
+    }
+    autoHideMessage() {
+        setTimeout(() => {
+            this.alertService.clear();
+            this.router.navigateByUrl('dashboard/area/viewarea');
+        }, 1000);
+    }
+    getAreaById(areaId) {
+        this.httpService.getById(this.apiService.API_AREA_API, areaId).subscribe((data) => {
+            if (data) {
+                this.areaDetails = data;
+                this.areaName = this.areaDetails.areaName;
+                this.spinner.hide();
+            }
+        }, error => {
+            this.autoHideMessage();
+            this.alertService.error('Error while featching area!');
+            console.log(error);
+        });
     }
 };
 CreateAreaComponent.ctorParameters = () => [
     { type: _common_http_service__WEBPACK_IMPORTED_MODULE_2__["HttpService"] },
     { type: _common_api_service__WEBPACK_IMPORTED_MODULE_3__["ApiService"] },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"] }
+    { type: ngx_spinner__WEBPACK_IMPORTED_MODULE_4__["NgxSpinnerService"] },
+    { type: _confirmation_dialog_confirmation_dialog_service__WEBPACK_IMPORTED_MODULE_5__["ConfirmationDialogService"] },
+    { type: _alert__WEBPACK_IMPORTED_MODULE_6__["AlertService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_7__["ActivatedRoute"] }
 ];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('report', { static: false })
@@ -344,42 +399,86 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _common_http_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../common/http.service */ "./src/app/common/http.service.ts");
 /* harmony import */ var _common_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../common/api.service */ "./src/app/common/api.service.ts");
+/* harmony import */ var ngx_spinner__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ngx-spinner */ "./node_modules/ngx-spinner/fesm2015/ngx-spinner.js");
+/* harmony import */ var _confirmation_dialog_confirmation_dialog_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../confirmation-dialog/confirmation-dialog.service */ "./src/app/confirmation-dialog/confirmation-dialog.service.ts");
+/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../_alert */ "./src/app/_alert/index.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+
+
+
+
 
 
 
 
 let ViewAreaComponent = class ViewAreaComponent {
-    constructor(httpService, apiService) {
+    constructor(httpService, apiService, spinner, confirmationDialogService, alertService, router, activatedRoute) {
         this.httpService = httpService;
         this.apiService = apiService;
+        this.spinner = spinner;
+        this.confirmationDialogService = confirmationDialogService;
+        this.alertService = alertService;
+        this.router = router;
+        this.activatedRoute = activatedRoute;
     }
     ngOnInit() {
+        this.spinner.show();
         this.cols = [
             { field: 'areaName', header: 'Area Name' },
             { field: 'districtName', header: 'District Name' },
             { field: 'delete', header: '' }
         ];
-        this.getAllDistricts();
+        this.getAllAreas();
     }
-    getAllDistricts() {
-        this.httpService.getAllArea(this.apiService.API_DISTRICT_API).subscribe((data) => {
-            // if (data) {
-            this.districts = data;
-            // }
+    getAllAreas() {
+        this.httpService.getAll(this.apiService.API_AREA_API).subscribe((data) => {
+            if (data) {
+                this.areas = data;
+                this.spinner.hide();
+            }
         }, error => {
+            this.autoHideMessage();
+            this.alertService.error('Error while fetching area!');
             console.log(error);
         });
     }
-    delete() {
-        console.log('Delete here');
+    delete(area) {
+        this.openConfirmationDialog(area);
     }
-    edit() {
-        console.log('Delete here');
+    openConfirmationDialog(area) {
+        this.confirmationDialogService.confirm('Please confirm..', 'Do you really want to delete?')
+            .then((confirmed) => this.deleteById(confirmed, area))
+            .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
+    }
+    deleteById(confirmed, area) {
+        if (confirmed) {
+            this.httpService.delete(this.apiService.API_AREA_API, area.id).subscribe((data) => {
+                if (data) {
+                    this.alertService.success('Area deleted successfully');
+                    this.autoHideMessage();
+                }
+            }, error => {
+                this.alertService.error('Error while Area district {}' + area.areaName);
+                this.autoHideMessage();
+                console.log(error);
+            });
+        }
+    }
+    autoHideMessage() {
+        setTimeout(() => {
+            this.alertService.clear();
+            this.getAllAreas();
+        }, 1000);
     }
 };
 ViewAreaComponent.ctorParameters = () => [
     { type: _common_http_service__WEBPACK_IMPORTED_MODULE_2__["HttpService"] },
-    { type: _common_api_service__WEBPACK_IMPORTED_MODULE_3__["ApiService"] }
+    { type: _common_api_service__WEBPACK_IMPORTED_MODULE_3__["ApiService"] },
+    { type: ngx_spinner__WEBPACK_IMPORTED_MODULE_4__["NgxSpinnerService"] },
+    { type: _confirmation_dialog_confirmation_dialog_service__WEBPACK_IMPORTED_MODULE_5__["ConfirmationDialogService"] },
+    { type: _alert__WEBPACK_IMPORTED_MODULE_6__["AlertService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_7__["Router"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_7__["ActivatedRoute"] }
 ];
 ViewAreaComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({

@@ -309,6 +309,19 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/_alert/alert.component.html":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/_alert/alert.component.html ***!
+  \***********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n    <div *ngFor=\"let alert of alerts\" class=\"{{cssClass(alert)}} alert-dismissable\">\n        {{alert.message}}\n        <a class=\"close\" (click)=\"removeAlert(alert)\">&times;</a>\n    </div>\n");
+
+/***/ }),
+
 /***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/admin/admin.component.html":
 /*!**********************************************************************************!*\
   !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/admin/admin.component.html ***!
@@ -331,7 +344,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\r\n<router-outlet></router-outlet>");
+/* harmony default export */ __webpack_exports__["default"] = ("<router-outlet></router-outlet>\r\n<div class=\"container text-center\">\r\n        <alert ></alert>\r\n</div>");
 
 /***/ }),
 
@@ -577,6 +590,249 @@ function __importDefault(mod) {
 
 /***/ }),
 
+/***/ "./src/app/_alert/alert.component.ts":
+/*!*******************************************!*\
+  !*** ./src/app/_alert/alert.component.ts ***!
+  \*******************************************/
+/*! exports provided: AlertComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AlertComponent", function() { return AlertComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _alert_model__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./alert.model */ "./src/app/_alert/alert.model.ts");
+/* harmony import */ var _alert_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alert.service */ "./src/app/_alert/alert.service.ts");
+
+
+
+
+let AlertComponent = class AlertComponent {
+    constructor(alertService) {
+        this.alertService = alertService;
+        this.alerts = [];
+    }
+    ngOnInit() {
+        this.subscription = this.alertService.onAlert(this.id)
+            .subscribe(alert => {
+            if (!alert.message) {
+                // clear alerts when an empty alert is received
+                this.alerts = [];
+                return;
+            }
+            // add alert to array
+            this.alerts.push(alert);
+        });
+    }
+    ngOnDestroy() {
+        // unsubscribe to avoid memory leaks
+        this.subscription.unsubscribe();
+    }
+    removeAlert(alert) {
+        // remove specified alert from array
+        this.alerts = this.alerts.filter(x => x !== alert);
+    }
+    cssClass(alert) {
+        if (!alert) {
+            return;
+        }
+        // return css class based on alert type
+        switch (alert.type) {
+            case _alert_model__WEBPACK_IMPORTED_MODULE_2__["AlertType"].Success:
+                return 'alert alert-success';
+            case _alert_model__WEBPACK_IMPORTED_MODULE_2__["AlertType"].Error:
+                return 'alert alert-danger';
+            case _alert_model__WEBPACK_IMPORTED_MODULE_2__["AlertType"].Info:
+                return 'alert alert-info';
+            case _alert_model__WEBPACK_IMPORTED_MODULE_2__["AlertType"].Warning:
+                return 'alert alert-warning';
+        }
+    }
+};
+AlertComponent.ctorParameters = () => [
+    { type: _alert_service__WEBPACK_IMPORTED_MODULE_3__["AlertService"] }
+];
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
+], AlertComponent.prototype, "id", void 0);
+AlertComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({ selector: 'alert', template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./alert.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/_alert/alert.component.html")).default })
+], AlertComponent);
+
+
+
+/***/ }),
+
+/***/ "./src/app/_alert/alert.model.ts":
+/*!***************************************!*\
+  !*** ./src/app/_alert/alert.model.ts ***!
+  \***************************************/
+/*! exports provided: Alert, AlertType */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Alert", function() { return Alert; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AlertType", function() { return AlertType; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+
+class Alert {
+    constructor(init) {
+        Object.assign(this, init);
+    }
+}
+var AlertType;
+(function (AlertType) {
+    AlertType[AlertType["Success"] = 0] = "Success";
+    AlertType[AlertType["Error"] = 1] = "Error";
+    AlertType[AlertType["Info"] = 2] = "Info";
+    AlertType[AlertType["Warning"] = 3] = "Warning";
+})(AlertType || (AlertType = {}));
+
+
+/***/ }),
+
+/***/ "./src/app/_alert/alert.module.ts":
+/*!****************************************!*\
+  !*** ./src/app/_alert/alert.module.ts ***!
+  \****************************************/
+/*! exports provided: AlertModule */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AlertModule", function() { return AlertModule; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+/* harmony import */ var _alert_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alert.component */ "./src/app/_alert/alert.component.ts");
+
+
+
+
+let AlertModule = class AlertModule {
+};
+AlertModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+        imports: [_angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"]],
+        declarations: [_alert_component__WEBPACK_IMPORTED_MODULE_3__["AlertComponent"]],
+        exports: [_alert_component__WEBPACK_IMPORTED_MODULE_3__["AlertComponent"]]
+    })
+], AlertModule);
+
+
+
+/***/ }),
+
+/***/ "./src/app/_alert/alert.service.ts":
+/*!*****************************************!*\
+  !*** ./src/app/_alert/alert.service.ts ***!
+  \*****************************************/
+/*! exports provided: AlertService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AlertService", function() { return AlertService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+/* harmony import */ var _alert_model__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./alert.model */ "./src/app/_alert/alert.model.ts");
+
+
+
+
+
+
+let AlertService = class AlertService {
+    constructor(router) {
+        this.router = router;
+        this.subject = new rxjs__WEBPACK_IMPORTED_MODULE_3__["Subject"]();
+        this.keepAfterRouteChange = false;
+        // clear alert messages on route change unless 'keepAfterRouteChange' flag is true
+        this.router.events.subscribe(event => {
+            if (event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationStart"]) {
+                if (this.keepAfterRouteChange) {
+                    // only keep for a single route change
+                    this.keepAfterRouteChange = false;
+                }
+                else {
+                    // clear alert messages
+                    this.clear();
+                }
+            }
+        });
+    }
+    // enable subscribing to alerts observable
+    onAlert(alertId) {
+        return this.subject.asObservable().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["filter"])(x => x && x.alertId === alertId));
+    }
+    // convenience methods
+    success(message, alertId) {
+        this.alert(new _alert_model__WEBPACK_IMPORTED_MODULE_5__["Alert"]({ message, type: _alert_model__WEBPACK_IMPORTED_MODULE_5__["AlertType"].Success, alertId }));
+    }
+    error(message, alertId) {
+        this.alert(new _alert_model__WEBPACK_IMPORTED_MODULE_5__["Alert"]({ message, type: _alert_model__WEBPACK_IMPORTED_MODULE_5__["AlertType"].Error, alertId }));
+    }
+    info(message, alertId) {
+        this.alert(new _alert_model__WEBPACK_IMPORTED_MODULE_5__["Alert"]({ message, type: _alert_model__WEBPACK_IMPORTED_MODULE_5__["AlertType"].Info, alertId }));
+    }
+    warn(message, alertId) {
+        this.alert(new _alert_model__WEBPACK_IMPORTED_MODULE_5__["Alert"]({ message, type: _alert_model__WEBPACK_IMPORTED_MODULE_5__["AlertType"].Warning, alertId }));
+    }
+    // main alert method    
+    alert(alert) {
+        this.keepAfterRouteChange = alert.keepAfterRouteChange;
+        this.subject.next(alert);
+    }
+    // clear alerts
+    clear(alertId) {
+        this.subject.next(new _alert_model__WEBPACK_IMPORTED_MODULE_5__["Alert"]({ alertId }));
+    }
+};
+AlertService.ctorParameters = () => [
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] }
+];
+AlertService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({ providedIn: 'root' })
+], AlertService);
+
+
+
+/***/ }),
+
+/***/ "./src/app/_alert/index.ts":
+/*!*********************************!*\
+  !*** ./src/app/_alert/index.ts ***!
+  \*********************************/
+/*! exports provided: AlertModule, AlertService, Alert, AlertType */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _alert_module__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./alert.module */ "./src/app/_alert/alert.module.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AlertModule", function() { return _alert_module__WEBPACK_IMPORTED_MODULE_1__["AlertModule"]; });
+
+/* harmony import */ var _alert_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./alert.service */ "./src/app/_alert/alert.service.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AlertService", function() { return _alert_service__WEBPACK_IMPORTED_MODULE_2__["AlertService"]; });
+
+/* harmony import */ var _alert_model__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./alert.model */ "./src/app/_alert/alert.model.ts");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Alert", function() { return _alert_model__WEBPACK_IMPORTED_MODULE_3__["Alert"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "AlertType", function() { return _alert_model__WEBPACK_IMPORTED_MODULE_3__["AlertType"]; });
+
+
+
+
+
+
+
+/***/ }),
+
 /***/ "./src/app/admin/admin.component.css":
 /*!*******************************************!*\
   !*** ./src/app/admin/admin.component.css ***!
@@ -759,8 +1015,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 /* harmony import */ var primeng_table__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! primeng/table */ "./node_modules/primeng/table.js");
 /* harmony import */ var primeng_table__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(primeng_table__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var primeng_primeng__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! primeng/primeng */ "./node_modules/primeng/primeng.js");
-/* harmony import */ var primeng_primeng__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(primeng_primeng__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var ngx_spinner__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ngx-spinner */ "./node_modules/ngx-spinner/fesm2015/ngx-spinner.js");
+/* harmony import */ var _alert__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./_alert */ "./src/app/_alert/index.ts");
+/* harmony import */ var primeng_primeng__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! primeng/primeng */ "./node_modules/primeng/primeng.js");
+/* harmony import */ var primeng_primeng__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(primeng_primeng__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _dashboard_dashboard_service__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./dashboard/dashboard.service */ "./src/app/dashboard/dashboard.service.ts");
+
+
+
 
 
 
@@ -792,9 +1054,11 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             _angular_router__WEBPACK_IMPORTED_MODULE_9__["RouterModule"],
             _angular_common_http__WEBPACK_IMPORTED_MODULE_10__["HttpClientModule"],
             primeng_table__WEBPACK_IMPORTED_MODULE_11__["TableModule"],
-            primeng_primeng__WEBPACK_IMPORTED_MODULE_12__["SharedModule"]
+            primeng_primeng__WEBPACK_IMPORTED_MODULE_14__["SharedModule"],
+            ngx_spinner__WEBPACK_IMPORTED_MODULE_12__["NgxSpinnerModule"],
+            _alert__WEBPACK_IMPORTED_MODULE_13__["AlertModule"]
         ],
-        providers: [],
+        providers: [_dashboard_dashboard_service__WEBPACK_IMPORTED_MODULE_15__["DashBoardService"]],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_4__["AppComponent"]]
     })
 ], AppModule);
@@ -871,6 +1135,119 @@ AuthService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         providedIn: 'root'
     })
 ], AuthService);
+
+
+
+/***/ }),
+
+/***/ "./src/app/common/api.service.ts":
+/*!***************************************!*\
+  !*** ./src/app/common/api.service.ts ***!
+  \***************************************/
+/*! exports provided: ApiService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ApiService", function() { return ApiService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+
+
+let ApiService = class ApiService {
+    constructor() {
+        this.API_BASE_URL = 'http://ec2-52-15-97-155.us-east-2.compute.amazonaws.com:8080/stageapi/api/v1/';
+        // District API
+        this.API_DISTRICT_API = 'district';
+        this.API_AREA_API = 'area';
+        //Dashboard APIs
+        this.API_AREA_COUNT = 'dashboard/areacount';
+        this.API_DISTRICT_COUNT = 'dashboard/districtcount';
+        this.API_PANEL_USER_COUNT = 'dashboard/panelusercount';
+        this.API_REVIEWED_REPORT_COUNT = 'dashboard/reportcount/revieddreport';
+        this.API_UNREVIEWED_REPORT_COUNT = 'dashboard/reportcount/unreviedreport';
+        this.API_VEHICLE_COUNT = 'dashboard/vechiclecount';
+        // Panel Users APIs
+        this.API_PANEL_USERS = 'paneluser';
+        // LED Display APIs
+        this.API_LED_DISPLAY = 'leddisplay';
+        this.API_LED_DISPLAY_REVIEWED = 'leddisplay/reviewed';
+        this.API_LED_DISPLAY_UN_REVIEWED = 'leddisplay/unReviewed';
+        // SMTP
+        this.API_SMTP = 'smtp';
+    }
+};
+ApiService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], ApiService);
+
+
+
+/***/ }),
+
+/***/ "./src/app/dashboard/dashboard.service.ts":
+/*!************************************************!*\
+  !*** ./src/app/dashboard/dashboard.service.ts ***!
+  \************************************************/
+/*! exports provided: DashBoardService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DashBoardService", function() { return DashBoardService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+/* harmony import */ var _common_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../common/api.service */ "./src/app/common/api.service.ts");
+
+
+
+
+let DashBoardService = class DashBoardService {
+    constructor(httpClient, apiService) {
+        this.httpClient = httpClient;
+        this.apiService = apiService;
+    }
+    getDistrictsCount() {
+        const requestUrl = this.apiService.API_BASE_URL + this.apiService.API_DISTRICT_COUNT;
+        return this.httpClient.get(requestUrl);
+        // return of({ count: 30 });
+    }
+    getAreasCount() {
+        const requestUrl = this.apiService.API_BASE_URL + this.apiService.API_AREA_COUNT;
+        return this.httpClient.get(requestUrl);
+        // return of({ count: 30 });
+    }
+    getVehiclesCount() {
+        const requestUrl = this.apiService.API_BASE_URL + this.apiService.API_VEHICLE_COUNT;
+        return this.httpClient.get(requestUrl);
+        // return of({ count: 30 });
+    }
+    getUsersCount() {
+        const requestUrl = this.apiService.API_BASE_URL + this.apiService.API_PANEL_USER_COUNT;
+        return this.httpClient.get(requestUrl);
+        // return of({ count: 30 });
+    }
+    getUnreviewedReportsCount() {
+        const requestUrl = this.apiService.API_BASE_URL + this.apiService.API_UNREVIEWED_REPORT_COUNT;
+        return this.httpClient.get(requestUrl);
+        // return of({ count: 30 });
+    }
+    getReviewedReportsCount() {
+        const requestUrl = this.apiService.API_BASE_URL + this.apiService.API_REVIEWED_REPORT_COUNT;
+        return this.httpClient.get(requestUrl);
+        // return of({ count: 30 });
+    }
+};
+DashBoardService.ctorParameters = () => [
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
+    { type: _common_api_service__WEBPACK_IMPORTED_MODULE_3__["ApiService"] }
+];
+DashBoardService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()
+], DashBoardService);
 
 
 

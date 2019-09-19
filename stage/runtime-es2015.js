@@ -64,7 +64,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"dashboard-dashboard-module":"dashboard-dashboard-module","default~area-area-module~district-district-module~led-vehicle-led-vehicle-module":"default~area-area-module~district-district-module~led-vehicle-led-vehicle-module","common":"common","area-area-module":"area-area-module","district-district-module":"district-district-module","led-vehicle-led-vehicle-module":"led-vehicle-led-vehicle-module"}[chunkId]||chunkId) + "-es2015.js"
+/******/ 		return __webpack_require__.p + "" + ({"dashboard-dashboard-module":"dashboard-dashboard-module","area-area-module":"area-area-module","district-district-module":"district-district-module","led-vehicle-led-vehicle-module":"led-vehicle-led-vehicle-module"}[chunkId]||chunkId) + "-es2015.js"
 /******/ 	}
 /******/
 /******/ 	// The require function
