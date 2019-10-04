@@ -1157,6 +1157,7 @@ __webpack_require__.r(__webpack_exports__);
 let ApiService = class ApiService {
     constructor() {
         this.API_BASE_URL = 'http://ec2-52-15-97-155.us-east-2.compute.amazonaws.com:8080/stageapi/api/v1/';
+        //public API_BASE_URL = 'http://localhost:80/stageapi/api/v1/';
         // District API
         this.API_DISTRICT_API = 'district';
         this.API_AREA_API = 'area';
@@ -1168,7 +1169,7 @@ let ApiService = class ApiService {
         this.API_UNREVIEWED_REPORT_COUNT = 'dashboard/reportcount/unreviedreport';
         this.API_VEHICLE_COUNT = 'dashboard/vechiclecount';
         // Panel Users APIs
-        this.API_PANEL_USERS = 'paneluser';
+        this.API_PANEL_USERS = 'panel';
         // LED Display APIs
         this.API_LED_DISPLAY = 'leddisplay';
         this.API_LED_DISPLAY_REVIEWED = 'leddisplay/reviewed';
@@ -1182,6 +1183,88 @@ ApiService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
         providedIn: 'root'
     })
 ], ApiService);
+
+
+
+/***/ }),
+
+/***/ "./src/app/common/http.service.ts":
+/*!****************************************!*\
+  !*** ./src/app/common/http.service.ts ***!
+  \****************************************/
+/*! exports provided: HttpService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HttpService", function() { return HttpService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
+/* harmony import */ var _common_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../common/api.service */ "./src/app/common/api.service.ts");
+
+
+
+
+let HttpService = class HttpService {
+    constructor(httpClient, apiService) {
+        this.httpClient = httpClient;
+        this.apiService = apiService;
+    }
+    getById(apiName, id) {
+        const requestUrl = this.apiService.API_BASE_URL + apiName + '/' + id;
+        return this.httpClient.get(requestUrl, {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+                'Content-Type': 'application/json'
+            }) /*,
+            params: new HttpParams().set('id', id)*/
+        });
+    }
+    getAll(apiName) {
+        const requestUrl = this.apiService.API_BASE_URL + apiName;
+        const loggedInUserId = 1;
+        const headers = new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]();
+        headers.set('Content-Type', 'application/json; charset=utf-8');
+        return this.httpClient.get(requestUrl, {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({}).set('Content-Type', 'application/json').set('loggedInUserId', loggedInUserId.toString()) /*,
+            params: new HttpParams().set('id', id)*/
+        });
+        // return of(Districts);
+    }
+    put(apiName, id, data) {
+        const requestUrl = this.apiService.API_BASE_URL + apiName + '/' + id;
+        return this.httpClient.put(requestUrl, data, {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+                'Content-Type': 'application/json'
+            })
+        });
+    }
+    post(apiName, data) {
+        const requestUrl = this.apiService.API_BASE_URL + apiName;
+        return this.httpClient.post(requestUrl, data, {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+                'Content-Type': 'application/json'
+            })
+        });
+    }
+    delete(apiName, id) {
+        const requestUrl = this.apiService.API_BASE_URL + apiName + '/' + id;
+        return this.httpClient.delete(requestUrl, {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
+                'Content-Type': 'application/json'
+            })
+        });
+    }
+};
+HttpService.ctorParameters = () => [
+    { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
+    { type: _common_api_service__WEBPACK_IMPORTED_MODULE_3__["ApiService"] }
+];
+HttpService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], HttpService);
 
 
 
@@ -1201,49 +1284,47 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 /* harmony import */ var _common_api_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../common/api.service */ "./src/app/common/api.service.ts");
+/* harmony import */ var _common_http_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../common/http.service */ "./src/app/common/http.service.ts");
+
 
 
 
 
 let DashBoardService = class DashBoardService {
-    constructor(httpClient, apiService) {
+    constructor(httpClient, apiService, httpService) {
         this.httpClient = httpClient;
         this.apiService = apiService;
+        this.httpService = httpService;
     }
     getDistrictsCount() {
-        const requestUrl = this.apiService.API_BASE_URL + this.apiService.API_DISTRICT_COUNT;
-        return this.httpClient.get(requestUrl);
+        return this.httpService.getAll(this.apiService.API_DISTRICT_COUNT);
         // return of({ count: 30 });
     }
     getAreasCount() {
-        const requestUrl = this.apiService.API_BASE_URL + this.apiService.API_AREA_COUNT;
-        return this.httpClient.get(requestUrl);
+        return this.httpService.getAll(this.apiService.API_AREA_COUNT);
         // return of({ count: 30 });
     }
     getVehiclesCount() {
-        const requestUrl = this.apiService.API_BASE_URL + this.apiService.API_VEHICLE_COUNT;
-        return this.httpClient.get(requestUrl);
+        return this.httpService.getAll(this.apiService.API_VEHICLE_COUNT);
         // return of({ count: 30 });
     }
     getUsersCount() {
-        const requestUrl = this.apiService.API_BASE_URL + this.apiService.API_PANEL_USER_COUNT;
-        return this.httpClient.get(requestUrl);
+        return this.httpService.getAll(this.apiService.API_PANEL_USER_COUNT);
         // return of({ count: 30 });
     }
     getUnreviewedReportsCount() {
-        const requestUrl = this.apiService.API_BASE_URL + this.apiService.API_UNREVIEWED_REPORT_COUNT;
-        return this.httpClient.get(requestUrl);
+        return this.httpService.getAll(this.apiService.API_UNREVIEWED_REPORT_COUNT);
         // return of({ count: 30 });
     }
     getReviewedReportsCount() {
-        const requestUrl = this.apiService.API_BASE_URL + this.apiService.API_REVIEWED_REPORT_COUNT;
-        return this.httpClient.get(requestUrl);
+        return this.httpService.getAll(this.apiService.API_REVIEWED_REPORT_COUNT);
         // return of({ count: 30 });
     }
 };
 DashBoardService.ctorParameters = () => [
     { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
-    { type: _common_api_service__WEBPACK_IMPORTED_MODULE_3__["ApiService"] }
+    { type: _common_api_service__WEBPACK_IMPORTED_MODULE_3__["ApiService"] },
+    { type: _common_http_service__WEBPACK_IMPORTED_MODULE_4__["HttpService"] }
 ];
 DashBoardService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])()
