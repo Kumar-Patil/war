@@ -2376,7 +2376,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.router = router;
         this.formBuilder = formBuilder;
         this.isSubmitted = false;
-        this.images = ['../../assets/images/login.png', '../../assets/images/image1.jpeg', '../../assets/images/image2.jpeg'];
+        this.images = ['../../../assets/images/login.png', '../../../assets/images/image1.jpeg', '../../../assets/images/image2.jpeg'];
       }
 
       _createClass(LoginComponent, [{
